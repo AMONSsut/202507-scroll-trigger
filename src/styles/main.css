@@ -2,7 +2,27 @@
     margin: 0;
     padding: 0;
 }
-
+@font-face {
+    font-family: "Zen Kaku Gothic Antique", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url(../../public/assets/fonts/ZenKakuGothicAntique/Regular.woff2) format('woff2');
+}
+@font-face {
+    font-family: "Zen Kaku Gothic Antique", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: url(../../public/assets/fonts/ZenKakuGothicAntique/Bokd.woff2) format('woff2');
+}
+@font-face {
+    font-family: "Zen Tokyo Zoo", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url(../../public/assets/fonts/ZenKakuGothicAntique/Regular.woff2) format('woff2');
+}
 :root {
     --black: #050505;
     --white: #ffffff;
@@ -10,10 +30,18 @@
     --content-margin: 12px;
 }
 html {
+    font-family: "Zen Kaku Gothic Antique", sans-serif;
     font-size: 10px;
 }
 body {
     position: relative;
+}
+h2 {
+    font-size: 4.8rem;
+    font-weight: 100;
+}
+p {
+    font-weight: 400;
 }
 
 /* header */
