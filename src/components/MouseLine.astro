@@ -1,0 +1,105 @@
+---
+---
+
+<style>
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+  }
+</style>
+
+<canvas id="mouseLineCanvas"></canvas>
+
+<script type="module">
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('mouseLineCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const maxPoints = 20;
+    let points = [];
+    let isMoving = false;
+    let lastMoveTime = Date.now();
+
+    document.addEventListener('mousemove', (e) => {
+      points.push({ x: e.clientX, y: e.clientY });
+      if (points.length > maxPoints) {
+        points.shift();
+      }
+
+      isMoving = true;
+      lastMoveTime = Date.now();
+    });
+
+    function drawSmoothLine(pts) {
+      if (pts.length < 2) return;
+
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+
+      for (let i = 1; i < pts.length - 2; i++) {
+        const xc = (pts[i].x + pts[i + 1].x) / 2;
+        const yc = (pts[i].y + pts[i + 1].y) / 2;
+        ctx.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+      }
+
+      ctx.quadraticCurveTo(
+        pts[pts.length - 2].x,
+        pts[pts.length - 2].y,
+        pts[pts.length - 1].x,
+        pts[pts.length - 1].y
+      );
+
+      ctx.stroke();
+    }
+
+    function drawDot(x, y) {
+      ctx.beginPath();
+      ctx.arc(x, y, 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = '#db3938';
+      ctx.fillStyle = '#db3938';
+      ctx.lineWidth = 2;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+
+      const now = Date.now();
+
+      if (isMoving) {
+        drawSmoothLine(points);
+
+        if (now - lastMoveTime > 20) {
+          isMoving = false;
+        }
+      } else {
+        // ポイント数を徐々に減らして自然に短くする
+        if (points.length > 1) {
+          points.shift();
+          drawSmoothLine(points);
+        } else if (points.length === 1) {
+          drawDot(points[0].x, points[0].y);
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  });
+</script>

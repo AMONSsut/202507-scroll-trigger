@@ -1,0 +1,112 @@
+---
+---
+
+<div class="heading-wrapper">
+  <h2>
+    <slot/>
+  </h2>
+  <span class="underline"></span>
+</div>
+
+<style>
+  .heading-wrapper {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  h2 {
+    font-size: 2rem;
+    padding-inline: calc(var(--content-margin) * 2);
+    padding-bottom: calc(var(--content-margin) * 1.5);
+  }
+
+  .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: calc(var(--content-margin) * 2);
+    height: 2px;
+    background-color: var(--white);
+    width: 4%;
+    transition: none;
+  }
+
+  .underline.expand {
+    animation: expandLine 0.8s forwards;
+  }
+
+  .underline.shrink {
+    animation: shrinkLine 0.8s forwards;
+  }
+
+  @keyframes expandLine {
+    from {
+      width: 4%;
+      left: 0;
+      right: auto;
+    }
+    to {
+      width: 100%;
+      left: 0;
+      right: auto;
+    }
+  }
+
+  @keyframes shrinkLine {
+    from {
+      width: 100%;
+      left: 0;
+      right: auto;
+    }
+    to {
+      width: 4%;
+      left: 0;
+      right: auto;
+    }
+  }
+</style>
+
+
+<script type="module" is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const heading = document.querySelector('.heading-wrapper');
+    const underline = document.querySelector('.underline');
+
+    let lastScrollY = window.scrollY;
+    let triggeredScrollDirection = null; // 連続判定防止
+
+    function handleScroll() {
+      const rect = heading.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const currentScrollY = window.scrollY;
+      const triggerPointUp = viewportHeight * 0.6;
+      const triggerPointDown = viewportHeight * 0.4;
+
+      const topPosition = rect.top;
+
+      if (topPosition < triggerPointUp && lastScrollY < currentScrollY) {
+        // 下スクロールで通過
+        if (triggeredScrollDirection !== 'down') {
+          underline.classList.remove('expand', 'shrink');
+          void underline.offsetWidth;
+          underline.classList.add('expand');
+          triggeredScrollDirection = 'down';
+        }
+      } else if (topPosition > triggerPointDown && lastScrollY > currentScrollY) {
+        // 上スクロールで通過
+        if (triggeredScrollDirection !== 'up') {
+          underline.classList.remove('expand', 'shrink');
+          void underline.offsetWidth;
+          underline.classList.add('shrink');
+          triggeredScrollDirection = 'up';
+        }
+      }
+
+      lastScrollY = currentScrollY;
+    }
+
+    window.addEventListener('scroll', handleScroll);
+  });
+</script>

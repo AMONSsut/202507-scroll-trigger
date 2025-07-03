@@ -1,0 +1,41 @@
+---
+
+---
+
+<section class="animated-section">
+<slot />
+</section>
+
+<script type="module" is:inline>
+document.addEventListener('DOMContentLoaded', () => {
+const targets = document.querySelectorAll('.animated-section');
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+    if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+    }
+    });
+}, { threshold: 0.2 });
+
+targets.forEach(target => observer.observe(target));
+});
+</script>
+
+
+
+<style>
+.animated-section {
+    margin-top: 100vh;
+    padding-bottom: 100vh;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+}
+
+.animated-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>

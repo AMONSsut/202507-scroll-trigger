@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --black: #050505;
+    --white: #ffffff;
+    --red: #db3938;
+    --content-margin: 12px;
+}
+html {
+    font-size: 10px;
+}
+body {
+    position: relative;
+}
+
+/* header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    padding: var(--content-margin);
+    width: calc(100% - var(--content-margin) * 2);
+    z-index: 1000;
+    color: var(--white);
+    .header-menu {
+        color: var(--white);
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        &:hover {
+            color: var(--red);
+        }
+    }
+}
+
+
+/* hero-section */
+.hero-section {
+    height: 100vh;
+    color: var(--white);
+    background-image: url(../../public/assets/hero-section/UrbanRunnerNight.jpeg);
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(100%);
+    z-index: -100;
+    .hero-inner {
+        display: grid;
+        place-items: end end;
+        height: 100vh;
+    }
+}
+
+/* section */
+.born-wrap {
+    padding-block: calc(var(--content-margin) * 10);
+    color: var(--white);
+    background-color: var(--red);
+}
+

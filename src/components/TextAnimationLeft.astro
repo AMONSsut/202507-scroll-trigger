@@ -1,0 +1,49 @@
+---
+
+---
+
+<p class="text-animate">
+    <slot/>
+</p>
+
+<style>
+  .text-animate {
+    margin-top: var(--content-margin);
+    padding-left: calc(var(--content-margin) * 2);
+    max-width: 60%;
+    font-size: 1.4rem;
+    line-height: 2;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+  }
+
+  .text-animate.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+</style>
+
+
+<script type="module" is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const target = document.querySelector('.text-animate');
+
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            target.classList.add('visible');
+            observer.unobserve(target); // 1度きり
+          }
+        });
+      },
+      {
+        threshold: 0.8, // エレメントが少しでも見えたら判定
+        // rootMargin: '0px 0px -60% 0px',
+      }
+    );
+
+    observer.observe(target);
+  });
+</script>

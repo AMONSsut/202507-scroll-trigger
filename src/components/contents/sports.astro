@@ -1,0 +1,146 @@
+---
+---
+
+<section class="sports-wrap">
+    <h2>My Sports Skills</h2>
+    <div class="column-wrap">
+        <div class="sports first">
+            <p class="name">BasketBall</p>
+            <p class="years"><span>10</span>years</p>
+        </div>
+        <div class="sports second">
+            <p class="name">Swiming</p>
+            <p class="years"><span>5</span>years</p>
+        </div>
+        <div class="sports third">
+            <p class="name">Karate</p>
+            <p class="years"><span>3</span>years</p>
+        </div>
+    </div>
+    <p class="description">
+        学生のころは バスケ 水泳 空手 をやってました。顔に水をつけられなくても意外となれるもんで、5年後にはがっつりメドレーを泳ぐようになっていました。沖縄の海で泳げたのは水泳のおかげ。<br>1番やっていて良かったのは水泳ですかね。
+    </p>
+</section>
+
+<style>
+.sports-wrap {
+    padding-block: calc(var(--content-margin) * 10);
+    color: var(--white);
+    background-color: var(--black);
+    h2 {
+        text-align: center;
+        font-size: 2rem;
+    }
+    .description {
+        margin-top: calc(var(--content-margin) * 4);
+        margin-inline: auto;
+        max-width: 80%;
+        font-size: 1.4rem;
+        text-align: center;
+        line-height: 2;
+    }
+    .column-wrap {
+        display: grid;
+        grid-template-columns: repeat(3 , 1fr);
+        gap: calc(var(--content-margin) * 1);
+        margin-top: calc(var(--content-margin) * 4);
+        padding-inline: calc(var(--content-margin) * 1);
+        .sports {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            aspect-ratio: 1 / 1.6;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: transform 0.6s ease, opacity 0.6s ease;
+            &::before,
+            &::after {
+                position: absolute;
+                /* content: ""; */
+                width: 60px;
+                aspect-ratio: 1;
+                clip-path: polygon(0 0,100% 0,0 100%);
+                background: linear-gradient(45deg,var(--red),var(--black));
+                z-index: 1;
+            }
+            &::before {
+                top: -4px;
+                left: -4px;
+            }
+            &::after {
+                bottom: -4px;
+                right: -4px;
+                transform: rotate(180deg);
+            }
+            &.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            &.first {
+                background-image: url(../../public/assets/sports/BasketballSwishingNet.jpeg);
+            }
+            &.second {
+                background-image: url(../../public/assets/sports/SwimmingPool.jpeg);
+                transition-delay: 0.4s;
+            }
+            &.third {
+                background-image: url(../../public/assets/sports/SereneJapaneseRoom.jpeg);
+                transition-delay: 0.8s;
+            }
+            .name {
+                padding: 4px;
+                font-size: 2.4rem;
+                font-weight: 300;
+                text-shadow: 1px 1px 0px var(--black);
+                z-index: 2;
+            }
+            .years {
+                padding: 4px;
+                font-size: 1.6rem;
+                text-align: right;
+                text-shadow: 1px 1px 0px var(--black);
+                z-index: 2;
+                span {
+                    padding-right: 4px;
+                    color: var(--white);
+                    font-size: 4rem;
+                    line-height: 1;
+                    letter-spacing: -0.3rem;
+                    /* text-shadow: 2px 1px 0px var(--red); */
+                }
+            }
+        }
+    }
+}
+</style>
+
+<script type="module" is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const first = document.querySelector('.first');
+    const second = document.querySelector('.second');
+    const third = document.querySelector('.third');
+
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            first.classList.add('visible');
+            second.classList.add('visible');
+            third.classList.add('visible');
+            observer.unobserve(first); // 1度きり
+          }
+        });
+      },
+      {
+        threshold: 0.8, // エレメントが少しでも見えたら判定
+        // rootMargin: '0px 0px -60% 0px',
+      }
+    );
+
+    observer.observe(first);
+  });
+</script>

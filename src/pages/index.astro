@@ -1,16 +1,63 @@
 ---
+import AnimatedText from "../components/AnimatedText.astro";
+import AnimatedSection from "../components/AnimatedSection.astro";
+import HeadingAnimationWhite from "../components/HeadingAnimationWhite.astro";
+import BackTop from "../components/BackTop.astro";
+import MouseLine from "../components/MouseLine.astro";
+import TextAnimationLeft from "../components/TextAnimationLeft.astro";
 
+import Sports from "../components/contents/sports.astro"
 ---
 
-<html lang="en">
+<html lang="ja">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<link rel="stylesheet" href="/src/styles/main.css">
+		<title>AAstro</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+	<header class="header">
+		<div class="header-logo">
+			asuto
+		</div>
+		<button class="header-menu">
+			menu
+		</button>
+	</header>
+	<main>
+		<section class="hero-section">
+			<div class="hero-inner">
+				<AnimatedText/>
+			</div>
+		</section>
+
+		<section class="born-wrap">
+			<HeadingAnimationWhite>Born in 2001</HeadingAnimationWhite>
+			<TextAnimationLeft>小さいころからスポーツとゲームが大好きだった。家の近くに1周3㎞の公園があったから父と毎週タイムアタックしてた。そのおかげで小学6年生のとき、長距離学年2位で陸上競技会の選手になった。</TextAnimationLeft>
+		</section>
+		<Sports/>
+		<AnimatedSection>
+			<h2>2001年生まれ</h2>
+			<p>
+			小さいころからスポーツとゲームが大好きだった
+			家の近くに1周3㎞の公園があったから父と毎週タイムアタックしてた
+			そのおかげで小学6年生のとき、長距離学年2位で陸上競技会の選手になった
+			やってたスポーツはバスケ10年間、水泳5年間、空手3年間</p>
+		</AnimatedSection>
+		<AnimatedSection>
+			<h2>2001年生まれ</h2>
+			<p>
+			小さいころからスポーツとゲームが大好きだった
+			家の近くに1周3㎞の公園があったから父と毎週タイムアタックしてた
+			そのおかげで小学6年生のとき、長距離学年2位で陸上競技会の選手になった
+			やってたスポーツはバスケ10年間、水泳5年間、空手3年間</p>
+		</AnimatedSection>
+		<MouseLine/>
+		<BackTop/>
+	</main>
+	<footer>©2025</footer>
 	</body>
 </html>

@@ -1,0 +1,65 @@
+---
+---
+
+<button id="backToTop" class="back-to-top">
+BACK TO TOP
+</button>
+
+<script type="module" is:inline>
+document.addEventListener('DOMContentLoaded', () => {
+  const button = document.getElementById('backToTop');
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+
+    if (currentScrollY < viewportHeight) {
+      // 100vh以内なら常に非表示
+      button.classList.remove('show');
+    } else if (currentScrollY < lastScrollY) {
+      // スクロールが上方向なら表示
+      button.classList.add('show');
+    } else {
+      // 下方向なら非表示
+      button.classList.remove('show');
+    }
+
+    lastScrollY = currentScrollY;
+  });
+
+  button.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});
+</script>
+
+<style>
+.back-to-top {
+position: fixed;
+bottom: var(--content-margin);
+right: var(--content-margin);
+padding: 1rem var(--content-margin);
+font-size: 1.2rem;
+font-weight: 700;
+background-color: var(--red);
+color: var(--white);
+border: none;
+border-radius: 2px;
+cursor: pointer;
+opacity: 0;
+pointer-events: none;
+transition: all 0.3s ease;
+&:hover {
+    background-color: var(--black);
+}
+}
+
+.back-to-top.show {
+opacity: 1;
+pointer-events: auto;
+}
+</style>
