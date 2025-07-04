@@ -69,6 +69,7 @@ p {
 
 /* hero-section */
 .hero-section {
+    padding-block: 0px;
     height: 100vh;
     color: var(--white);
     background-image: url(../../public/assets/hero-section/UrbanRunnerNight.jpeg);
@@ -84,9 +85,20 @@ p {
 }
 
 /* section */
-.born-wrap {
+section {
     padding-block: calc(var(--content-margin) * 10);
+}
+.born-wrap {
     color: var(--white);
     background-color: var(--red);
 }
+.slowly {
+}
 
+/* text-animation */
+.type-char {
+    opacity: 0;
+    display: inline-block;
+    transform: translateY(-4px);
+    transition: transform 0.2s ease;
+}

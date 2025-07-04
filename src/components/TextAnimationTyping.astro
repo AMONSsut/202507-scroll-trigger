@@ -1,0 +1,58 @@
+---
+
+---
+
+<p id="type-text">
+    <slot/>
+</p>
+
+<style>
+#type-text {
+    margin-top: var(--content-margin);
+    padding-inline: calc(var(--content-margin) * 2);
+    font-size: 1.4rem;
+    text-align: right;
+}
+</style>
+
+<script type="module" is:inline>
+  const container = document.getElementById("type-text");
+  const text = container.textContent;
+  container.textContent = '';
+
+  // 1文字ずつタグ分割
+  [...text].forEach(char => {
+    const span = document.createElement('span');
+    span.textContent = char;
+    span.classList.add('type-char');
+    container.appendChild(span);
+  });
+
+  const chars = container.querySelectorAll('.type-char');
+  let triggered = false;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !triggered) {
+        triggered = true;
+        showChars();
+        observer.unobserve(container);
+      }
+    });
+  }, { threshold: 0.5 }); // 50%見えたタイミング
+
+  observer.observe(container);
+
+  function showChars() {
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < chars.length) {
+        chars[index].style.opacity = 1;
+        chars[index].style.transform = 'translateY(0)';
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 200); // 100msごとに1文字表示
+  }
+</script>
